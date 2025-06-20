@@ -9,10 +9,18 @@ This script demonstrates and tests MinIO's catalog feature by creating test data
 The script performs the following operations:
 
 1. **Creates Test Data**: Generates random files with varying sizes in multiple folders
+   - Creates only **one file with exactly 555 bytes** (the target for filtering)
+   - All other files have random sizes (1-100KB, avoiding 555 bytes)
 2. **Runs Two Catalog Jobs**: 
    - One without filters (catalogs all files)
    - One with size filter (catalogs only files of specific size)
 3. **Compares Results**: Shows how filtering affects catalog performance and output
+4. **Demonstrates Two File Finding Approaches**:
+   - **Unfiltered catalog**: Uses `mc sql` queries against the complete catalog data to find the 555-byte file
+     - Executes SQL queries like `SELECT * FROM s3object WHERE size = 555` against the CSV catalog output
+     - Searches through all cataloged files to find matches based on size criteria
+     - Requires parsing through the entire unfiltered dataset to locate specific files
+   - **Filtered catalog**: Directly displays the filtered catalog data which contains only the 555-byte file
 
 ## Why Use This Script
 
