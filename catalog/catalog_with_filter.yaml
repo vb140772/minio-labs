@@ -1,0 +1,16 @@
+catalog:
+  apiVersion: v1
+  bucket: test04
+
+  destination:
+    bucket: catalog
+    format: JSON
+    compression: off
+
+  name:
+    - match: "*"
+
+  versions: current
+  filters:
+    size:
+      equalTo: 555
