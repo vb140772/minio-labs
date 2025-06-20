@@ -39,7 +39,7 @@ The script performs the following operations:
 ## How It Works
 
 ### Prerequisites
-- MinIO Client (`mc`) configured with an alias
+- MinIO Client (`mc`) installed and configured with an alias
 - `jq` for JSON processing
 - `openssl` for random data generation
 - Catalog support enabled on the MinIO cluster
@@ -53,7 +53,7 @@ check_jq
 check_openssl
 
 # Validate MinIO configuration
-get_alias_config "$ALIAS"
+get_alias_config "$ALIAS"  # Checks mc installation and validates alias using 'mc alias list'
 check_catalog_support "$ALIAS"
 ```
 
@@ -172,6 +172,12 @@ The script includes a cleanup option that removes all resources created during t
 - **Validation**: Still validates alias configuration in cleanup mode
 
 ## Key Functions
+
+### `get_alias_config()`
+Validates MinIO Client configuration:
+- Checks if `mc` command is installed
+- Uses `mc alias list` to verify alias exists
+- Displays available aliases if specified alias is not found
 
 ### `create_catalog_config()`
 Creates catalog configuration files with optional filters and format selection.

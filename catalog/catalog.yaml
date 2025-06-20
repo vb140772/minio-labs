@@ -1,0 +1,13 @@
+catalog:
+  apiVersion: v1
+  bucket: test04
+
+  destination:
+    bucket: catalog
+    format: CSV
+    compression: off
+
+  name:
+    - match: "*"
+
+  versions: current

@@ -44,21 +44,24 @@ check_openssl() {
 # Function to read MinIO configuration from mc config
 get_alias_config() {
     local alias=$1
-    local config_file="$HOME/.mc/config.json"
     
-    if [ ! -f "$config_file" ]
+    # Check if mc command is installed
+    if ! command -v mc &> /dev/null
     then
-        echo "Error: MC config file not found at $config_file" >&2
+        echo "Error: MinIO Client (mc) is required but not installed. Please install mc first." >&2
         exit 1
     fi
     
-    # Check if alias exists in config
-    if ! jq -e ".aliases.\"$alias\"" "$config_file" > /dev/null 2>&1
+    # Check if alias exists using mc alias list --json
+    if ! mc alias list --json | jq -e ". | select(.alias == \"$alias\")" > /dev/null 2>&1
     then
-        echo "Error: Alias '$alias' not found in mc config." >&2
-        echo "Available aliases: $(jq -r '.aliases | keys | join(", ")' "$config_file")" >&2
+        echo "Error: Alias '$alias' not found in mc configuration." >&2
+        echo "Available aliases:" >&2
+        mc alias list --json | jq -r '.[].alias' | sort | sed 's/^/  /' >&2
         exit 1
     fi
+    
+    echo "Alias '$alias' found in mc configuration"
 }
 
 # Function to cleanup catalog files and buckets
