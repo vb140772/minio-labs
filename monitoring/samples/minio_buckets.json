@@ -1,0 +1,20 @@
+[
+  {
+    "targets": ["minio-1-1:9000"],
+    "labels": {
+      "__metrics_path__": "/minio/metrics/v3"
+    }
+  },
+  {
+    "targets": ["minio-1-1:9000"],
+    "labels": {
+      "__metrics_path__": "/minio/metrics/v3/bucket/api/warp-bucket"
+    }
+  },
+  {
+    "targets": ["minio-1-1:9000"],
+    "labels": {
+      "__metrics_path__": "/minio/metrics/v3/bucket/replication/warp-bucket"
+    }
+  }
+]
